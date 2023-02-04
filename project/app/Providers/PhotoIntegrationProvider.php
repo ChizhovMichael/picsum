@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Contracts\PhotoContract;
 use App\Contracts\PhotoIntegrationContract;
 use App\Services\PhotoIntegrationService;
+use App\Services\PhotoService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +24,7 @@ class PhotoIntegrationProvider extends ServiceProvider
                 $app->make(Http::class)
             );
         });
+        $this->app->bind(PhotoContract::class, PhotoService::class);
     }
 
     /**
