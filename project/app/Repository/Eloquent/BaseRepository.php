@@ -22,6 +22,14 @@ class BaseRepository implements EloquentRepositoryInterface
     }
 
     /**
+     * @return string
+     */
+    public function getTableName(): string
+    {
+        return $this->model->getTable();
+    }
+
+    /**
      * @inheritDoc
      */
     public function all(array $columns = ['*'], array $relations = []): Collection
