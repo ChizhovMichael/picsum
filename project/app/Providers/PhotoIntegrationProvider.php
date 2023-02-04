@@ -16,8 +16,11 @@ class PhotoIntegrationProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(PhotoIntegrationContract::class, function () {
-            return new PhotoIntegrationService(config('api.api_v2_picsum'), Http::class);
+        $this->app->singleton(PhotoIntegrationContract::class, function ($app) {
+            return new PhotoIntegrationService(
+                config('api.api_v2_picsum'),
+                $app->make(Http::class)
+            );
         });
     }
 

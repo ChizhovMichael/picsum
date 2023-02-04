@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(PhotoIntegrationProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
     }
 
