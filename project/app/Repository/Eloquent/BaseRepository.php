@@ -36,4 +36,12 @@ class BaseRepository implements EloquentRepositoryInterface
     {
         return $this->model->with($relations)->get($columns);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function count(array $columns = ['*'], array $relations = []): int
+    {
+        return $this->model->with($relations)->get($columns)->count();
+    }
 }

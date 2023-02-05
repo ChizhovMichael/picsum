@@ -18,4 +18,11 @@ interface EloquentRepositoryInterface
      * @return Collection
      */
     public function all(array $columns = ['*'], array $relations = []): Collection;
+
+    /**
+     * @param array $columns
+     * @param array $relations
+     * @return int
+     */
+    public function count(array $columns = ['*'], array $relations = []): int;
 }
