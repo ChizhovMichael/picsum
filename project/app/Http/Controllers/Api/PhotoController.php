@@ -77,7 +77,8 @@ class PhotoController extends Controller
         /** @var Model $model */
         $model = $this->photoInterface->create(
             $request->get('photo_id'),
-            $request->get('status')
+            $request->get('status'),
+            $request->get('photo_url')
         );
 
         return response()->json([

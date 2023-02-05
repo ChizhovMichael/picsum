@@ -30,6 +30,7 @@ class Photo extends Model
      */
     protected $fillable = [
         'photo_id',
-        'status'
+        'status',
+        'photo_url'
     ];
 }

@@ -119,13 +119,13 @@ class PhotoService implements PhotoInterface
      */
     public function getAllPhotos()
     {
-        return $this->photoRepository->all(['id', 'photo_id', 'status']);
+        return $this->photoRepository->all(['id', 'photo_id', 'status', 'photo_url']);
     }
 
     /**
      * @inheritDoc
      */
-    public function create(int $id, bool $status)
+    public function create(int $id, bool $status, string $photoUrl)
     {
         $model = $this->photoRepository->findByColumns([
             'photo_id' => $id
@@ -139,7 +139,8 @@ class PhotoService implements PhotoInterface
 
         return $this->photoRepository->create([
             'photo_id' => $id,
-            'status' => $status
+            'status' => $status,
+            'photo_url' => $photoUrl
         ]);
     }
 }

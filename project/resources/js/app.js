@@ -190,10 +190,13 @@ Photos.prototype._getRandomPhotos = async function (page) {
 }
 
 Photos.prototype._save = async function(photo_id, status) {
+    let img = this.image.src;
+
     try {
         await axios.post(api, {
             photo_id: photo_id,
-            status: status
+            status: status,
+            photo_url: img
         });
     } catch (error) {
         new Toast({message: error.response.data.message, type: 'danger'});

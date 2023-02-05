@@ -27,5 +27,5 @@ interface PhotoInterface
      * @param int $id
      * @param bool $status
      */
-    public function create(int $id, bool $status);
+    public function create(int $id, bool $status, string $photoUrl);
 }
