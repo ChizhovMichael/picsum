@@ -14,7 +14,7 @@ class PhotoService implements PhotoInterface
     /**
      * @var PhotoIntegrationInterface
      */
-    protected $photoIntegrationContract;
+    protected $photoIntegrationInterface;
 
     /**
      * @var PhotoRepositoryInterface
@@ -22,24 +22,24 @@ class PhotoService implements PhotoInterface
     protected $photoRepository;
 
     /**
-     * @param PhotoIntegrationInterface $photoIntegrationContract
+     * @param PhotoIntegrationInterface $photoIntegrationInterface
      * @param PhotoRepositoryInterface $photoRepository
      */
     public function __construct(
-        PhotoIntegrationInterface $photoIntegrationContract,
+        PhotoIntegrationInterface $photoIntegrationInterface,
         PhotoRepositoryInterface  $photoRepository
     )
     {
-        $this->photoIntegrationContract = $photoIntegrationContract;
+        $this->photoIntegrationInterface = $photoIntegrationInterface;
         $this->photoRepository = $photoRepository;
     }
 
     /**
-     * @param PhotoIntegrationInterface $photoIntegrationContract
+     * @param PhotoIntegrationInterface $photoIntegrationInterface
      */
-    public function setPhotoIntegrationContract(PhotoIntegrationInterface $photoIntegrationContract): void
+    public function setPhotoIntegrationInterface(PhotoIntegrationInterface $photoIntegrationInterface): void
     {
-        $this->photoIntegrationContract = $photoIntegrationContract;
+        $this->photoIntegrationInterface = $photoIntegrationInterface;
     }
 
     /**
@@ -76,7 +76,7 @@ class PhotoService implements PhotoInterface
         $excludePhotos = $this->photoRepository->getPhotosByPage($page)->pluck('photo_id')->toArray();
         // 4. Get photos and links
         try {
-            $photoIntegrationDto = $this->photoIntegrationContract->getPhotoList($page + 1, PhotoEnum::COUNT_PHOTO_PER_PAGE);
+            $photoIntegrationDto = $this->photoIntegrationInterface->getPhotoList($page + 1, PhotoEnum::COUNT_PHOTO_PER_PAGE);
         } catch (RequestException $e) {
             throw new PhotoIntegrationException($e->getMessage(), $e->getCode());
         }
