@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\PhotoIntegrationContract;
+use App\Dto\Response\PhotoIntegrationResponse;
 use App\Enum\PhotoIntegrationEnum;
 
 class PhotoIntegrationService implements PhotoIntegrationContract
@@ -24,11 +25,17 @@ class PhotoIntegrationService implements PhotoIntegrationContract
     /**
      * @inheritDoc
      */
-    public function getPhotoList(int $page, int $limit)
+    public function getPhotoList(int $page, int $limit): PhotoIntegrationResponse
     {
-        return $this->httpClient::get($this->apiUrl . PhotoIntegrationEnum::GET_PHOTO_LIST, [
+        $response = $this->httpClient::get($this->apiUrl . PhotoIntegrationEnum::GET_PHOTO_LIST, [
             'page' => $page,
             'limit' => $limit
-        ])->throw()->json();
+        ])->throw();
+
+        $res = new PhotoIntegrationResponse();
+        $res->setLink($response->header('link'));
+        $res->setPhotos(collect($response->json()));
+
+        return $res;
     }
 }

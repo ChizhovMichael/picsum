@@ -2,13 +2,15 @@
 
 namespace App\Contracts;
 
+use App\Dto\Response\PhotoIntegrationResponse;
+
 interface PhotoIntegrationContract
 {
     /**
      * @param int $page
      * @param int $limit
-     * @return mixed
+     * @return PhotoIntegrationResponse
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function getPhotoList(int $page, int $limit);
+    public function getPhotoList(int $page, int $limit): PhotoIntegrationResponse;
 }

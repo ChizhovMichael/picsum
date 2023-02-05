@@ -26,15 +26,14 @@ class PhotoRepository extends BaseRepository implements PhotoRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getCurrentPhotos(): Collection
+    public function getPhotosByPage(int $page): Collection
     {
-        $page = floor(DB::table($this->getTableName())->max('id') / PhotoEnum::ITEMS);
-
         return DB::table($this->getTableName())
-            ->select('id')
+            ->select('photo_id')
             ->where([
-                ['id', '>=', $page * PhotoEnum::ITEMS],
-                ['id', '<=', $page * PhotoEnum::ITEMS + (PhotoEnum::ITEMS - 1)],
-            ])->get();
+                ['id', '>=', $page * PhotoEnum::COUNT_PHOTO_PER_PAGE + 1],
+                ['id', '<=', $page * PhotoEnum::COUNT_PHOTO_PER_PAGE + PhotoEnum::COUNT_PHOTO_PER_PAGE],
+            ])
+            ->get();
     }
 }
