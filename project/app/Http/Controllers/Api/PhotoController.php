@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\PhotoCollection;
-use App\Http\Resources\Api\RandomPhotoCollection;
 use App\Services\PhotoInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -26,17 +25,16 @@ class PhotoController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
+     * @param Request $request
      * @return JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $response = $this->photoInterface->getCurrentPhotos();
+        $response = $this->photoInterface->getCurrentPhotos($request->get('page'));
 
         return response()->json([
-            'data' => new RandomPhotoCollection($response->getPhotos()),
-            'next' => $response->isNextPage(),
+            'data' => $response->getPhotos(),
+            'next' => $response->getNextPage(),
             'page' => $response->getCurrentPage(),
             'count' => $response->getCount()
         ]);

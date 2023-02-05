@@ -10,7 +10,7 @@ interface PhotoInterface
     /**
      * @return PhotoResponse
      */
-    public function getCurrentPhotos();
+    public function getCurrentPhotos(?int $page);
 
     /**
      * @param int $id

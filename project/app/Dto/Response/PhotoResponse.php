@@ -2,16 +2,12 @@
 
 namespace App\Dto\Response;
 
-
-
-use Illuminate\Database\Eloquent\Collection;
-
 class PhotoResponse
 {
-    /** @var Collection */
+    /** @var array */
     private $photos;
 
-    /** @var boolean */
+    /** @var integer */
     private $nextPage;
 
     /** @var integer */
@@ -21,33 +17,33 @@ class PhotoResponse
     private $count;
 
     /**
-     * @return Collection
+     * @return array
      */
-    public function getPhotos(): Collection
+    public function getPhotos(): array
     {
         return $this->photos;
     }
 
     /**
-     * @param Collection $photos
+     * @param array $photos
      */
-    public function setPhotos(Collection $photos): void
+    public function setPhotos(array $photos): void
     {
         $this->photos = $photos;
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isNextPage(): bool
+    public function getNextPage(): int
     {
         return $this->nextPage;
     }
 
     /**
-     * @param bool $nextPage
+     * @param int $nextPage
      */
-    public function setNextPage(bool $nextPage): void
+    public function setNextPage(int $nextPage): void
     {
         $this->nextPage = $nextPage;
     }

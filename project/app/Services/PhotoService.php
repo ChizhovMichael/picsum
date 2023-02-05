@@ -7,7 +7,6 @@ use App\Enum\PhotoEnum;
 use App\Exceptions\PhotoException;
 use App\Exceptions\PhotoIntegrationException;
 use App\Repository\PhotoRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\RequestException;
 
 class PhotoService implements PhotoInterface
@@ -67,37 +66,34 @@ class PhotoService implements PhotoInterface
     /**
      * @inheritDoc
      */
-    public function getCurrentPhotos()
+    public function getCurrentPhotos(?int $page)
     {
-        // 1. Get count photo
         $countPhoto = $this->photoRepository->count(['id'], []);
-        // 2. Define current page
-        $page = floor($countPhoto / PhotoEnum::COUNT_PHOTO_PER_PAGE);
-        // 3. Exclude photo
+        if ($page === null) {
+            $page = floor($countPhoto / PhotoEnum::COUNT_PHOTO_PER_PAGE);
+        }
         $excludePhotos = $this->photoRepository->getPhotosByPage($page)->pluck('photo_id')->toArray();
-        // 4. Get photos and links
         try {
             $photoIntegrationDto = $this->photoIntegrationInterface->getPhotoList($page + 1, PhotoEnum::COUNT_PHOTO_PER_PAGE);
         } catch (RequestException $e) {
             throw new PhotoIntegrationException($e->getMessage(), $e->getCode());
         }
-        // 5. Check next page
-        $nextPage = $this->checkNextPage($photoIntegrationDto->getLink());
+        $nextPage = $page;
+        if ($this->checkNextPage($photoIntegrationDto->getLink())) {
+            ++$nextPage;
+        }
 
-        // 6. Current page
-        $currentPage = $page + 1;
-
-        $collection = new Collection();
+        $collection = [];
         foreach ($photoIntegrationDto->getPhotos() as $photo) {
             if (!in_array($photo['id'], $excludePhotos)) {
-                $collection->push((object)$photo);
+                $collection[] = $photo['id'];
             }
         }
 
         $response = new PhotoResponse();
         $response->setPhotos($collection);
         $response->setNextPage($nextPage);
-        $response->setCurrentPage($currentPage);
+        $response->setCurrentPage($page);
         $response->setCount(PhotoEnum::COUNT_PHOTO_PER_PAGE);
 
         return $response;
