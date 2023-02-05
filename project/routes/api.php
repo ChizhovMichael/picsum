@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('photo/all', [PhotoController::class, 'all']);
+
 Route::apiResource('photo', PhotoController::class)->only([
     'index', 'update'
 ]);

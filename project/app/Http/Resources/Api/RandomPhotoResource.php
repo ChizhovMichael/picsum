@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PhotoResource extends JsonResource
+class RandomPhotoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,6 @@ class PhotoResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'photo_id' => $this->photo_id,
-            'status' => $this->status
         ];
     }
 }

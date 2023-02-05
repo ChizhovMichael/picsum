@@ -112,4 +112,12 @@ class PhotoService implements PhotoInterface
 
         return $model;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAllPhotos()
+    {
+        return $this->photoRepository->all(['id', 'photo_id', 'status']);
+    }
 }

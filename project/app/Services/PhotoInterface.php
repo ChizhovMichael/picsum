@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Dto\Response\PhotoResponse;
+use Illuminate\Database\Eloquent\Collection;
 
 interface PhotoInterface
 {
@@ -16,4 +17,9 @@ interface PhotoInterface
      * @param bool $status
      */
     public function updateStatusPhoto(int $id, bool $status);
+
+    /**
+     * @return Collection
+     */
+    public function getAllPhotos();
 }
