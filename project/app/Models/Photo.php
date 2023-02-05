@@ -22,4 +22,14 @@ class Photo extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'photo_id',
+        'status'
+    ];
 }

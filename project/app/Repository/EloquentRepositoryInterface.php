@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 interface EloquentRepositoryInterface
 {
@@ -25,4 +26,16 @@ interface EloquentRepositoryInterface
      * @return int
      */
     public function count(array $columns = ['*'], array $relations = []): int;
+
+    /**
+     * @param array $expression
+     * @param array $columns
+     * @param array $relations
+     * @return Model|null
+     */
+    public function findByColumns(
+        array $expression = [],
+        array $columns = ['*'],
+        array $relations = []
+    ): ?Model;
 }

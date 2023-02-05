@@ -44,4 +44,16 @@ class BaseRepository implements EloquentRepositoryInterface
     {
         return $this->model->with($relations)->get($columns)->count();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function findByColumns(
+        array $expression = [],
+        array $columns = ['*'],
+        array $relations = []
+    ): ?Model
+    {
+        return $this->model->with($relations)->select($columns)->where($expression)->firstOrFail();
+    }
 }

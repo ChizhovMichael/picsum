@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\PhotoCollection;
 use App\Services\PhotoInterface;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PhotoController extends Controller
@@ -25,9 +27,9 @@ class PhotoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $response = $this->photoInterface->getCurrentPhotos();
 
@@ -42,16 +44,20 @@ class PhotoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param int $id
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
-        // 204 если нет тела
-        // 200 если есть
+        $request->validate([
+            'status' => 'required|boolean',
+        ]);
+
+        /** @var Model $update */
+        $model = $this->photoInterface->updateStatusPhoto($id, $request->get('status'));
+
         return response()->json([
-            'id' => $id,
-            'request' => json_encode($request)
+            'data' => $model
         ]);
     }
 
