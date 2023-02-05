@@ -16,7 +16,7 @@ class CreatePhotosTable extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('photo_id')->unique();
-            $table->boolean('status');
+            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }

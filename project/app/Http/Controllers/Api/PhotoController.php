@@ -50,7 +50,7 @@ class PhotoController extends Controller
     public function update(Request $request, int $id): JsonResponse
     {
         $request->validate([
-            'status' => 'required|boolean',
+            'status' => 'boolean|nullable',
         ]);
 
         /** @var Model $update */

@@ -1,6 +1,6 @@
 require('./bootstrap');
 
-const api = 'http://127.0.0.1:8000/api/photo';
+const api = '/api/photo';
 
 function Toast(options) {
 
@@ -237,3 +237,63 @@ Photos.prototype._delete = function (index) {
 }
 
 new Photos(document.getElementById('Image'));
+
+
+function createRaw(raw) {
+    let tr = document.createElement('tr');
+    let td = document.createElement('td');
+    let id = document.createElement('a');
+    let btn = document.createElement('button');
+
+    id.href = raw.photo_url;
+    id.textContent = raw.id;
+    id.className = 'text-underline'
+    id.target = '_blank';
+    td.append(id);
+    tr.append(td);
+
+    td = document.createElement('td');
+    td.textContent = raw.status;
+    tr.append(td);
+
+    td = document.createElement('td');
+    td.className = 'text-right';
+    btn.type = 'button';
+    btn.textContent = 'Reset';
+    btn.className = 'rounded-lg py-4 px-6 bg-secondary text-white';
+    btn.addEventListener('click', async function () {
+        try {
+            await axios.patch(`${api}/${raw.photo_id}`, {
+                status: null
+            });
+            location.reload();
+        } catch (error) {
+            new Toast({message: error.response.data.message, type: 'danger'});
+        }
+    })
+    td.append(btn);
+    tr.append(td);
+
+    return tr;
+}
+
+async function renderTable(el) {
+    if (!el) {
+        return;
+    }
+
+    try {
+        const response = await axios.get(`${api}/all`);
+        const photos = response.data.data;
+
+        photos.forEach((element) => {
+            el.append(createRaw(element))
+        });
+
+    } catch (error) {
+        new Toast({message: error.response.data.message, type: 'danger'});
+    }
+
+}
+
+renderTable(document.getElementById('Table'));

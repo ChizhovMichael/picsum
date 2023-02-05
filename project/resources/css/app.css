@@ -89,6 +89,10 @@ video {
     max-width: 24rem
 }
 
+.max-w-6xl {
+    max-width: 72rem
+}
+
 .min-h-screen {
     min-height: 100vh
 }
@@ -150,6 +154,12 @@ video {
 
 .text-white {
     color: white;
+}
+.text-right {
+    text-align: right;
+}
+.text-underline {
+    text-decoration: underline;
 }
 
 .toastjs-container {
@@ -223,6 +233,22 @@ video {
 
 [disabled] {
     opacity: 0.5;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
 }
 
 @media (min-width: 640px) {

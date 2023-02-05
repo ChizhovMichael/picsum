@@ -102,7 +102,7 @@ class PhotoService implements PhotoInterface
     /**
      * @inheritDoc
      */
-    public function updateStatusPhoto(int $id, bool $status)
+    public function updateStatusPhoto(int $id, ?bool $status)
     {
         $model = $this->photoRepository->findByColumns(['photo_id' => $id]);
         if (!$model) {

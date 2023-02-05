@@ -16,7 +16,7 @@ interface PhotoInterface
      * @param int $id
      * @param bool $status
      */
-    public function updateStatusPhoto(int $id, bool $status);
+    public function updateStatusPhoto(int $id, ?bool $status);
 
     /**
      * @return Collection
