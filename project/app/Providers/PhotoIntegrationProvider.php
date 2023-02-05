@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Contracts\PhotoContract;
-use App\Contracts\PhotoIntegrationContract;
+use App\Services\PhotoInterface;
+use App\Services\PhotoIntegrationInterface;
 use App\Services\PhotoIntegrationService;
 use App\Services\PhotoService;
 use Illuminate\Support\Facades\Http;
@@ -18,13 +18,13 @@ class PhotoIntegrationProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(PhotoIntegrationContract::class, function ($app) {
+        $this->app->singleton(PhotoIntegrationInterface::class, function ($app) {
             return new PhotoIntegrationService(
                 config('api.api_v2_picsum'),
                 $app->make(Http::class)
             );
         });
-        $this->app->bind(PhotoContract::class, PhotoService::class);
+        $this->app->bind(PhotoInterface::class, PhotoService::class);
     }
 
     /**
@@ -34,6 +34,6 @@ class PhotoIntegrationProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [PhotoIntegrationContract::class];
+        return [PhotoIntegrationInterface::class];
     }
 }

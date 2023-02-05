@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Contracts\PhotoContract;
-use App\Contracts\PhotoIntegrationContract;
 use App\Dto\Response\PhotoResponse;
 use App\Enum\PhotoEnum;
 use App\Exceptions\PhotoIntegrationException;
@@ -11,10 +9,10 @@ use App\Repository\PhotoRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Client\RequestException;
 
-class PhotoService implements PhotoContract
+class PhotoService implements PhotoInterface
 {
     /**
-     * @var PhotoIntegrationContract
+     * @var PhotoIntegrationInterface
      */
     protected $photoIntegrationContract;
 
@@ -24,12 +22,12 @@ class PhotoService implements PhotoContract
     protected $photoRepository;
 
     /**
-     * @param PhotoIntegrationContract $photoIntegrationContract
+     * @param PhotoIntegrationInterface $photoIntegrationContract
      * @param PhotoRepositoryInterface $photoRepository
      */
     public function __construct(
-        PhotoIntegrationContract $photoIntegrationContract,
-        PhotoRepositoryInterface $photoRepository
+        PhotoIntegrationInterface $photoIntegrationContract,
+        PhotoRepositoryInterface  $photoRepository
     )
     {
         $this->photoIntegrationContract = $photoIntegrationContract;
@@ -37,9 +35,9 @@ class PhotoService implements PhotoContract
     }
 
     /**
-     * @param PhotoIntegrationContract $photoIntegrationContract
+     * @param PhotoIntegrationInterface $photoIntegrationContract
      */
-    public function setPhotoIntegrationContract(PhotoIntegrationContract $photoIntegrationContract): void
+    public function setPhotoIntegrationContract(PhotoIntegrationInterface $photoIntegrationContract): void
     {
         $this->photoIntegrationContract = $photoIntegrationContract;
     }

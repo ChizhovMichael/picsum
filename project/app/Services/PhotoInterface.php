@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Services;
 
 use App\Dto\Response\PhotoResponse;
 
-interface PhotoContract
+interface PhotoInterface
 {
     /**
      * @return PhotoResponse

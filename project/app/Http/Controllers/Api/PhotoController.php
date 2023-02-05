@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Contracts\PhotoContract;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\PhotoCollection;
+use App\Services\PhotoInterface;
 
 class PhotoController extends Controller
 {
     /**
-     * @var PhotoContract
+     * @var PhotoInterface
      */
     protected $photoContract;
 
     /**
-     * @param PhotoContract $photoContract
+     * @param PhotoInterface $photoContract
      */
-    public function __construct(PhotoContract $photoContract)
+    public function __construct(PhotoInterface $photoContract)
     {
         $this->photoContract = $photoContract;
     }

@@ -4,5 +4,5 @@ namespace App\Enum;
 
 class PhotoEnum
 {
-    public const ITEMS = 100;
+    public const COUNT_PHOTO_PER_PAGE = 10;
 }

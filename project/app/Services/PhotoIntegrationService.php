@@ -2,11 +2,10 @@
 
 namespace App\Services;
 
-use App\Contracts\PhotoIntegrationContract;
 use App\Dto\Response\PhotoIntegrationResponse;
 use App\Enum\PhotoIntegrationEnum;
 
-class PhotoIntegrationService implements PhotoIntegrationContract
+class PhotoIntegrationService implements PhotoIntegrationInterface
 {
     private $apiUrl;
 

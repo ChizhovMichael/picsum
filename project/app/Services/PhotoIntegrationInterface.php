@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Services;
 
 use App\Dto\Response\PhotoIntegrationResponse;
 
-interface PhotoIntegrationContract
+interface PhotoIntegrationInterface
 {
     /**
      * @param int $page
