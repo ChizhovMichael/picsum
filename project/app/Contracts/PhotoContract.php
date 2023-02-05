@@ -2,10 +2,12 @@
 
 namespace App\Contracts;
 
+use App\Dto\Response\PhotoResponse;
+
 interface PhotoContract
 {
     /**
-     * @throws \Illuminate\Http\Client\RequestException
+     * @return PhotoResponse
      */
     public function getCurrentPhotos();
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\PhotoContract;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\PhotoCollection;
 
 class PhotoController extends Controller
 {
@@ -20,9 +21,14 @@ class PhotoController extends Controller
         $this->photoContract = $photoContract;
     }
 
-
     public function index()
     {
-        return $this->photoContract->getCurrentPhotos();
+        $response = $this->photoContract->getCurrentPhotos();
+
+        return response()->json([
+            'data' => new PhotoCollection($response->getPhotos()),
+            'next' => $response->isNextPage(),
+            'page' => $response->getCurrentPage()
+        ]);
     }
 }
