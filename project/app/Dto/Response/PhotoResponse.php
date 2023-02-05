@@ -17,6 +17,9 @@ class PhotoResponse
     /** @var integer */
     private $currentPage;
 
+    /** @var integer */
+    private $count;
+
     /**
      * @return Collection
      */
@@ -63,5 +66,21 @@ class PhotoResponse
     public function setCurrentPage(int $currentPage): void
     {
         $this->currentPage = $currentPage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param int $count
+     */
+    public function setCount(int $count): void
+    {
+        $this->count = $count;
     }
 }

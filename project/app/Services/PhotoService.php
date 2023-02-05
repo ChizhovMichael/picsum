@@ -97,6 +97,7 @@ class PhotoService implements PhotoInterface
         $response->setPhotos($collection);
         $response->setNextPage($nextPage);
         $response->setCurrentPage($currentPage);
+        $response->setCount(PhotoEnum::COUNT_PHOTO_PER_PAGE);
 
         return $response;
     }

@@ -37,7 +37,8 @@ class PhotoController extends Controller
         return response()->json([
             'data' => new RandomPhotoCollection($response->getPhotos()),
             'next' => $response->isNextPage(),
-            'page' => $response->getCurrentPage()
+            'page' => $response->getCurrentPage(),
+            'count' => $response->getCount()
         ]);
     }
 
