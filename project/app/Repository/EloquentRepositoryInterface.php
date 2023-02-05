@@ -38,4 +38,10 @@ interface EloquentRepositoryInterface
         array $columns = ['*'],
         array $relations = []
     ): ?Model;
+
+    /**
+     * @param array $payload
+     * @return Model|null
+     */
+    public function create(array $payload): ?Model;
 }

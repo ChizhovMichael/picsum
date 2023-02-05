@@ -64,6 +64,30 @@ class PhotoController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return JsonResponse
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'photo_id' => 'required|integer',
+            'status' => 'required|boolean',
+        ]);
+
+        /** @var Model $model */
+        $model = $this->photoInterface->create(
+            $request->get('photo_id'),
+            $request->get('status')
+        );
+
+        return response()->json([
+            'data' => $model
+        ]);
+    }
+
+    /**
      * @return JsonResponse
      */
     public function all(): JsonResponse

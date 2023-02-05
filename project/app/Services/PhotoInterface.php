@@ -22,4 +22,10 @@ interface PhotoInterface
      * @return Collection
      */
     public function getAllPhotos();
+
+    /**
+     * @param int $id
+     * @param bool $status
+     */
+    public function create(int $id, bool $status);
 }

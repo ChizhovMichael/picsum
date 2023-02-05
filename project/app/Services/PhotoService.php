@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Dto\Response\PhotoResponse;
 use App\Enum\PhotoEnum;
+use App\Exceptions\PhotoException;
 use App\Exceptions\PhotoIntegrationException;
 use App\Repository\PhotoRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -108,6 +109,9 @@ class PhotoService implements PhotoInterface
     public function updateStatusPhoto(int $id, bool $status)
     {
         $model = $this->photoRepository->findByColumns(['photo_id' => $id]);
+        if (!$model) {
+            return null;
+        }
         $model->setAttribute('status', $status);
         $model->save();
 
@@ -120,5 +124,26 @@ class PhotoService implements PhotoInterface
     public function getAllPhotos()
     {
         return $this->photoRepository->all(['id', 'photo_id', 'status']);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function create(int $id, bool $status)
+    {
+        $model = $this->photoRepository->findByColumns([
+            'photo_id' => $id
+        ]);
+
+        if ($model) {
+            throw new PhotoException(
+                sprintf('Photo with id %s exists', $id)
+            );
+        }
+
+        return $this->photoRepository->create([
+            'photo_id' => $id,
+            'status' => $status
+        ]);
     }
 }

@@ -54,6 +54,14 @@ class BaseRepository implements EloquentRepositoryInterface
         array $relations = []
     ): ?Model
     {
-        return $this->model->with($relations)->select($columns)->where($expression)->firstOrFail();
+        return $this->model->with($relations)->select($columns)->where($expression)->first();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function create(array $payload): ?Model
+    {
+        return $this->model->with([])->create($payload);
     }
 }
