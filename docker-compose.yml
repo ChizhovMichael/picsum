@@ -24,6 +24,7 @@ services:
             - .:/var/www/html/public
         networks:
             - app
+        working_dir: /var/www/html/public
 
     composer:
         image: composer
