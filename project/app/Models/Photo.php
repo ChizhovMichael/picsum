@@ -33,4 +33,6 @@ class Photo extends Model
         'status',
         'photo_url'
     ];
+
+    protected $primaryKey = 'photo_id';
 }

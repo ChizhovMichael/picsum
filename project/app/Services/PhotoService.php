@@ -147,7 +147,7 @@ class PhotoService implements PhotoInterface
      */
     public function getAllPhotos()
     {
-        return $this->photoRepository->all(['id', 'photo_id', 'status', 'photo_url']);
+        return $this->photoRepository->all(['photo_id', 'status', 'photo_url']);
     }
 
     /**
@@ -160,9 +160,10 @@ class PhotoService implements PhotoInterface
         ]);
 
         if ($model) {
-            throw new PhotoException(
-                sprintf('Photo with id %s exists', $id)
-            );
+            $model->setAttribute('status', $status);
+            $model->save();
+
+            return $model;
         }
 
         return $this->photoRepository->create([

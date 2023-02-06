@@ -146,7 +146,9 @@ Photos.prototype._load = async function () {
     }
     let random = Math.floor(Math.random() * this.photos.length);
 
-    if (!this.photos[random]) {
+    this._disable();
+    if (this.photos[random] === undefined ||
+        this.photos[random] === null) {
         this._default();
         return;
     }
@@ -169,7 +171,6 @@ Photos.prototype._clickEvent = async function (e) {
         return;
     }
 
-    this._disable();
     await this._save(photo_id, status);
     await this._load();
 };
@@ -241,23 +242,8 @@ new Photos(document.getElementById('Image'));
 
 function createRaw(raw) {
     let tr = document.createElement('tr');
-    let td = document.createElement('td');
-    let id = document.createElement('a');
     let btn = document.createElement('button');
 
-    id.href = raw.photo_url;
-    id.textContent = raw.id;
-    id.className = 'text-underline'
-    id.target = '_blank';
-    td.append(id);
-    tr.append(td);
-
-    td = document.createElement('td');
-    td.textContent = raw.status;
-    tr.append(td);
-
-    td = document.createElement('td');
-    td.className = 'text-right';
     btn.type = 'button';
     btn.textContent = 'Reset';
     btn.className = 'rounded-lg py-4 px-6 bg-secondary text-white';
@@ -271,8 +257,13 @@ function createRaw(raw) {
             new Toast({message: error.response.data.message, type: 'danger'});
         }
     })
-    td.append(btn);
-    tr.append(td);
+
+    tr.insertAdjacentHTML('beforeend', `
+        <td><a href="${raw.photo_url}" class="text-underline" target="_blank">${raw.photo_id}</a></td>
+        <td>${raw.status}</td>
+        <td class="text-right btn"></td>
+    `);
+    tr.querySelector('.btn').append(btn);
 
     return tr;
 }
