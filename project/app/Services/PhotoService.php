@@ -64,13 +64,30 @@ class PhotoService implements PhotoInterface
     }
 
     /**
+     * @return array
+     */
+    private function getResetPhotos(): array
+    {
+        $photos = $this->photoRepository->allWithExpression([
+            'photo_id'
+        ], [
+            'status' => null
+        ]);
+
+        return $photos->pluck('photo_id')->toArray();
+    }
+
+    /**
      * @inheritDoc
      */
     public function getCurrentPhotos(?int $page)
     {
+        $resetPhotos = [];
         $countPhoto = $this->photoRepository->count(['id'], []);
+
         if ($page === null) {
             $page = floor($countPhoto / PhotoEnum::COUNT_PHOTO_PER_PAGE);
+            $resetPhotos = $this->getResetPhotos();
         }
         $excludePhotos = $this->photoRepository->getPhotosByPage($page)->pluck('photo_id')->toArray();
         try {
@@ -86,8 +103,12 @@ class PhotoService implements PhotoInterface
         $collection = [];
         foreach ($photoIntegrationDto->getPhotos() as $photo) {
             if (!in_array($photo['id'], $excludePhotos)) {
-                $collection[] = $photo['id'];
+                $collection[] = (int)$photo['id'];
             }
+        }
+
+        if (count($resetPhotos)) {
+            $collection = array_merge($collection, $resetPhotos);
         }
 
         $response = new PhotoResponse();

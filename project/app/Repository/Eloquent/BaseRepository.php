@@ -64,4 +64,16 @@ class BaseRepository implements EloquentRepositoryInterface
     {
         return $this->model->with([])->create($payload);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function allWithExpression(
+        array $columns = ['*'],
+        array $expression = [],
+        array $relations = []
+    ): Collection
+    {
+        return $this->model->with($relations)->where($expression)->get($columns);
+    }
 }

@@ -44,4 +44,16 @@ interface EloquentRepositoryInterface
      * @return Model|null
      */
     public function create(array $payload): ?Model;
+
+    /**
+     * @param array $columns
+     * @param array $expression
+     * @param array $relations
+     * @return Collection
+     */
+    public function allWithExpression(
+        array $columns = ['*'],
+        array $expression = [],
+        array $relations = []
+    ): Collection;
 }
