@@ -83,18 +83,25 @@ class PhotoService implements PhotoInterface
     public function getCurrentPhotos(?int $page)
     {
         $resetPhotos = [];
-        $countPhoto = $this->photoRepository->count(['id'], []);
+        $countPhoto = $this->photoRepository->count(['photo_id'], []);
 
         if ($page === null) {
             $page = floor($countPhoto / PhotoEnum::COUNT_PHOTO_PER_PAGE);
             $resetPhotos = $this->getResetPhotos();
         }
-        $excludePhotos = $this->photoRepository->getPhotosByPage($page)->pluck('photo_id')->toArray();
         try {
             $photoIntegrationDto = $this->photoIntegrationInterface->getPhotoList($page + 1, PhotoEnum::COUNT_PHOTO_PER_PAGE);
         } catch (RequestException $e) {
             throw new PhotoIntegrationException($e->getMessage(), $e->getCode());
         }
+        $max = $photoIntegrationDto->getPhotos()->max('id');
+        $min = $photoIntegrationDto->getPhotos()->min('id');
+        $excludePhotos = $this->photoRepository->allWithExpression([
+            'photo_id'
+        ], [
+            ['photo_id', '>=', $min],
+            ['photo_id', '<=', $max]
+        ])->pluck('photo_id')->toArray();
         $nextPage = $page;
         if ($this->checkNextPage($photoIntegrationDto->getLink())) {
             ++$nextPage;
